@@ -1,41 +1,40 @@
 import {
-  bigint,
-  datetime,
   index,
+  integer,
   json,
-  mysqlTable,
+  pgTable,
   serial,
   text,
   timestamp,
   varchar,
-} from 'drizzle-orm/mysql-core'
+} from 'drizzle-orm/pg-core'
 
-export const subscribers = mysqlTable('subscribers', {
+export const subscribers = pgTable('subscribers', {
   id: serial('id').primaryKey(),
   email: varchar('email', { length: 120 }),
   token: varchar('token', { length: 50 }),
-  subscribedAt: datetime('subscribed_at'),
-  unsubscribedAt: datetime('unsubscribed_at'),
+  subscribedAt: timestamp('subscribed_at'),
+  unsubscribedAt: timestamp('unsubscribed_at'),
   updatedAt: timestamp('updated_at').defaultNow(),
 })
 
-export const newsletters = mysqlTable('newsletters', {
+export const newsletters = pgTable('newsletters', {
   id: serial('id').primaryKey(),
   subject: varchar('subject', { length: 200 }),
   body: text('body'),
-  sentAt: datetime('sent_at'),
+  sentAt: timestamp('sent_at'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow(),
 })
 
-export const comments = mysqlTable(
+export const comments = pgTable(
   'comments',
   {
     id: serial('id').primaryKey(),
     userId: varchar('user_id', { length: 200 }).notNull(),
     userInfo: json('user_info'),
     postId: varchar('post_id', { length: 100 }).notNull(),
-    parentId: bigint('parent_id', { mode: 'bigint' }),
+    parentId: integer('parent_id'),
     body: json('body'),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
@@ -45,7 +44,7 @@ export const comments = mysqlTable(
   })
 )
 
-export const guestbook = mysqlTable('guestbook', {
+export const guestbook = pgTable('guestbook', {
   id: serial('id').primaryKey(),
   userId: varchar('user_id', { length: 200 }).notNull(),
   userInfo: json('user_info'),

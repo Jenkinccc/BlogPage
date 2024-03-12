@@ -23,7 +23,7 @@ export const Post = z.object({
   }),
   publishedAt: z.string(),
   description: z.string(),
-  categories: z.array(z.string()),
+  categories: z.array(z.string()).optional(),
   body: z.any(),
   readingTime: z.number(),
   mood: z.enum(['happy', 'sad', 'neutral']),
@@ -60,6 +60,8 @@ export default defineType({
       name: 'categories',
       title: 'Categories',
       type: 'array',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       of: [{ type: 'reference', to: { type: 'category' } }],
     }),
     defineField({
@@ -82,6 +84,8 @@ export default defineType({
       name: 'description',
       title: 'Description',
       type: 'text',
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
       rows: 3,
       validation: (Rule) => Rule.required(),
     }),
